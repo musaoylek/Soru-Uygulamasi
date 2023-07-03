@@ -1,0 +1,213 @@
+<div class="card">
+      <div class="card-header">
+        <h2>Soru Uygulaması</h2>
+      </div>
+      <hr />
+      <div class="card-body">
+        <h2 id="question" class="card-title">Soru</h2>
+        <ul>
+          <li>
+            <input type="radio" id="a" name="answer" class="answer" />
+            <label for="a" id="aText">Soru</label>
+          </li>
+          <li>
+            <input type="radio" id="b" name="answer" class="answer" />
+            <label for="b" id="bText">Soru</label>
+          </li>
+          <li>
+            <input type="radio" id="c" name="answer" class="answer" />
+            <label for="c" id="cText">Soru</label>
+          </li>
+          <li>
+            <input type="radio" id="d" name="answer" class="answer" />
+            <label for="d" id="dText">Soru</label>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button id="submit" class="btn">Gönder Gelsin</button>
+      </div>
+    </div>
+    
+    <style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    width: 60%;
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+.card-header {
+    margin: 10px;
+    color: blueviolet;
+}
+
+hr {
+    width: 75%;
+    margin: auto;
+}
+
+.card-body {
+    margin: 20px;
+    margin-bottom: 50px;
+}
+
+.card-body .card-title {
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card-body ul li {
+    list-style: none;
+    padding: 5px;
+}
+
+.answer {
+    accent-color: blueviolet;
+}
+
+.card-footer .btn {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 13px;
+    width: 100%;
+    border: none;
+    background-color: blueviolet;
+    color: white;
+    font-size: 18px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.card-footer .btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    </style>
+    
+    <script>
+    const quizData = [
+  {
+    question: "İstanbul'u fetheden padişah aşağıdakilerden hangisidir?",
+    a: "Yavuz Sultan Selim",
+    b: "Kanuni Sultan Süleyman",
+    c: "Fatih Sultan Süleyman",
+    d: "Orhan Gazi",
+    correct: "c",
+  },
+  {
+    question: "Osmanlı Devleti'nde tahtta en uzun süre kalan padişah aşağıdakilerden hangisidir?",
+    a: "Kanuni Sultan Süleyman",
+    b: "Fatih Sultan Süleyman",
+    c: "Yavuz Sultan Selim",
+    d: "IV.Murat",
+    correct: "a",
+  },
+  {
+    question: "Saray dışından evlilik yapan ilk Osmanlı padişahı aşağıdakilerden hangisidir?",
+    a: "Yıldırım Bayezid",
+    b: "II.Mahmut",
+    c: "II.Osman",
+    d: "I.Abdülhamit",
+    correct: "c",
+  },
+  {
+    question: "Mustafa Kemal'in emperyalizme karşı mücadele verdiği ilk savaş aşağıdakilerden hangisidir",
+    a: "Trablusgarp",
+    b: "Başkomutanlık Meydan",
+    c: "Sakarya",
+    d: "Çanakkale",
+    correct: "a",
+  },
+  {
+    question: "Mustafa Kemal'e hangi savaştan sonra gazi ve mareşallik unvanı verilmiiştir?",
+    a: "I.İnönü Muharebesi",
+    b: "II İnönü Muharebesi",
+    c: "Sakarya Meydan Muharebesi",
+    d: "Çanakkale Muharebesi",
+    correct: "c",
+  },
+];
+
+const answerEls = document.querySelectorAll(".answer");
+const aText = document.getElementById("aText");
+const bText = document.getElementById("bText");
+const cText = document.getElementById("cText");
+const dText = document.getElementById("dText");
+const questionEl = document.getElementById("question");
+const submitBtn = document.getElementById("submit");
+
+let currentQuiz = 0;
+let score = 0;
+
+quizLoad();
+
+function quizLoad() {
+  deSelectInput();
+
+  const currentQuizData = quizData[currentQuiz];
+
+  questionEl.innerText = currentQuizData.question;
+  aText.innerText = currentQuizData.a;
+  bText.innerText = currentQuizData.b;
+  cText.innerText = currentQuizData.c;
+  dText.innerText = currentQuizData.d;
+}
+
+function getSelection() {
+  let answer = undefined;
+
+  answerEls.forEach((answerEl) => {
+    if (answerEl.checked) {
+      answer = answerEl.id;
+    }
+  });
+  return answer;
+}
+
+function deSelectInput() {
+  answerEls.forEach((answer) => {
+    answer.checked = false;
+  });
+}
+
+submitBtn.addEventListener("click", () => {
+  const answer = getSelection();
+
+  if (answer) {
+    if (answer === quizData[currentQuiz].correct) {
+      score++;
+    }
+
+    currentQuiz++;
+
+    if (currentQuiz < quizData.length) {
+      quizLoad();
+    } else {
+      alert(`Başarı karneniz: ${score} / ${quizData.length}`);
+      location.reload();
+    }
+  }
+});
+</script>
+    
+    
